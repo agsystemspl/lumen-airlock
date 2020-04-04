@@ -1,5 +1,5 @@
 {
-    "name": "agsystems/lumen-airlock",
+    "name": "agsystemspl/lumen-airlock",
     "description": "Lumen Airlock provides a featherweight authentication system for SPAs and simple APIs.",
     "keywords": ["lumen", "airlock", "auth"],
     "license": "MIT",
