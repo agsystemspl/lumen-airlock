@@ -1,0 +1,30 @@
+{
+    "name": "agsystems/lumen-airlock",
+    "description": "Lumen Airlock provides a featherweight authentication system for SPAs and simple APIs.",
+    "keywords": ["lumen", "airlock", "auth"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Paweł Feruś",
+            "email": "mindc@o2.pl"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "ext-json": "*",
+        "illuminate/contracts": "^6.9|^7.0",
+        "illuminate/database": "^6.9|^7.0",
+        "illuminate/support": "^6.9|^7.0",
+        "illuminate/auth": "^6.9|^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AGSystems\\Lumen\\Airlock\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
