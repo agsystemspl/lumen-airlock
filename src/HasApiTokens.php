@@ -42,8 +42,11 @@ trait HasApiTokens
      * @param array $abilities
      * @return \AGSystems\Lumen\Airlock\NewAccessToken
      */
-    public function createToken(string $name, int $expires_in = null, array $abilities = ['*'])
+    public function createToken(string $name = null, int $expires_in = null, array $abilities = ['*'])
     {
+        if (is_null($name))
+            $name = config('airlock.token_name');
+
         $expires_at = null;
 
         if ($expires_in === null) {

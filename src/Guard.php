@@ -84,7 +84,7 @@ class Guard
 
         if ($token = $this->request->bearerToken()) {
             $model = Airlock::$personalAccessTokenModel;
-            $accessToken = $model::where('token', hash('sha256', $token))->first();
+            $accessToken = $model::where('token', hash('sha256', $token))->where('name', config('airlock.token_name'))->first();
 
             if (!$accessToken ||
                 $accessToken->revoked_at ||
@@ -100,5 +100,26 @@ class Guard
         }
 
         return $this->user = null;
+    }
+
+    public function userByToken($token, $name = null)
+    {
+        if (is_null($name))
+            $name = config('airlock.token_name');
+
+        $model = Airlock::$personalAccessTokenModel;
+        $accessToken = $model::where('token', hash('sha256', $token))->where('name', $name)->first();
+
+        if (!$accessToken ||
+            $accessToken->revoked_at ||
+            $this->provider->getModel() != get_class($accessToken->tokenable) ||
+            ($accessToken->expires_at && Carbon::now()->gte($accessToken->expires_at))
+        ) {
+            return null;
+        }
+
+        return $this->supportsTokens($accessToken->tokenable) ? $accessToken->tokenable->withAccessToken(
+            tap($accessToken->forceFill(['last_used_at' => Carbon::now()]))->save()
+        ) : null;
     }
 }
